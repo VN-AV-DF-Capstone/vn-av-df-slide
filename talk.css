@@ -1,0 +1,48 @@
+/* Bản thuyết trình (26/10): mỗi trang là khung 1920×1080 thu phóng theo màn hình (--k do talk.js đặt),
+   nên cỡ chữ luôn tính theo 1080p: tiêu đề 62 px, nhãn sơ đồ ≥ 26 px, ghi chú 25 px. */
+:root { --k: 0.5; --ink: #1d1d1d; --mute: #555; }
+
+* { box-sizing: border-box; }
+html, body { margin: 0; background: #fff; color: var(--ink);
+  font-family: "Segoe UI", Arial, sans-serif; overscroll-behavior: none; }
+
+section { height: 100vh; height: 100dvh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.fit { width: calc(1920px * var(--k)); height: calc(1080px * var(--k)); position: relative; flex: none; }
+.stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
+  transform: scale(var(--k)); transform-origin: 0 0;
+  display: flex; flex-direction: column; padding: 52px 80px 30px; }
+
+.no { font-size: 26px; letter-spacing: 0.08em; color: var(--mute); margin: 0 0 2px; }
+h2 { font-size: 62px; line-height: 1.15; margin: 0 0 8px; font-weight: 700; }
+.sub { font-size: 32px; margin: 0 0 4px; color: var(--mute); }
+
+.art { flex: 1 1 0; min-height: 0; position: relative; }
+.art svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.art svg text { font-family: inherit; }
+
+.note { flex: none; font-size: 25px; font-style: italic; line-height: 1.35; color: var(--mute);
+  margin: 6px 0 0; min-height: 68px; }
+.note b { font-weight: 700; font-style: normal; color: var(--ink); }
+body.hide-notes .note { visibility: hidden; }
+
+/* trang bìa */
+.cover { flex-direction: column; align-items: flex-start; justify-content: center; padding: 70px 100px; }
+.cover .art { flex: 0 0 110px; width: 1000px; margin-bottom: 56px; }
+.cover h1 { font-size: 66px; line-height: 1.2; margin: 0 0 22px; font-weight: 700; max-width: 1700px; }
+.cover .lead { font-size: 40px; line-height: 1.3; margin: 0 0 24px; max-width: 1650px; }
+.cover .en { font-size: 32px; line-height: 1.35; font-style: italic; color: var(--mute); margin: 0 0 56px; max-width: 1720px; }
+.cover .who { font-size: 30px; line-height: 1.5; color: var(--mute); margin: 0; }
+.cover .who b { color: var(--ink); }
+.cover .team { display: grid; grid-template-columns: 560px 560px; gap: 0 40px; padding-top: 34px; border-top: 2px solid #d5d5d5;
+  font-size: 32px; line-height: 1.55; color: var(--mute); }
+.cover .team b { color: var(--ink); font-size: 34px; }
+
+.tn { position: fixed; top: 10px; right: 14px; z-index: 5; background: none; border: 0; padding: 0;
+  font: italic 14px "Segoe UI", Arial, sans-serif; text-decoration: underline; color: #444; cursor: pointer; }
+.lang { position: fixed; top: 10px; right: 170px; z-index: 5; font: italic 14px "Segoe UI", Arial, sans-serif; color: #444; }
+.counter { position: fixed; left: 14px; bottom: 8px; z-index: 5; font: italic 14px "Segoe UI", Arial, sans-serif; color: #444; }
+
+@media print {
+  section { height: auto; page-break-after: always; }
+  .tn, .counter, .lang { display: none; }
+}

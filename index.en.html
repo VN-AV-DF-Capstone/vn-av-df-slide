@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VN-AV-DF · Talk</title>
+<link rel="stylesheet" href="talk.css">
+<script>
+  /* đặt hệ số thu phóng trước khi vẽ, để không nháy */
+  (function () {
+    var set = function () {
+      var k = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+      document.documentElement.style.setProperty('--k', k);
+    };
+    set(); window.addEventListener('resize', set);
+  })();
+</script>
+</head>
+<body>
+<a class="lang" href="index.html">Tiếng Việt</a>
+<button id="tn" class="tn" type="button">Notes: on (N)</button>
+
+<!-- icon dùng chung: khung 48 × 48, nét đơn -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#444"/></marker>
+    <marker id="ahp" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#8A6DB8"/></marker>
+    <g id="i-video"><rect x="5" y="13" width="26" height="22" rx="4"/><path d="M31 21l12-7v20l-12-7z"/></g>
+    <g id="i-wave"><path d="M7 20v8M14 13v22M21 7v34M28 15v18M35 11v26M42 20v8"/></g>
+    <g id="i-speaker"><path d="M6 19h8l11-9v28l-11-9H6z"/><path d="M32 17c3 4 3 10 0 14M37 12c6 7 6 17 0 24"/></g>
+    <g id="i-eye"><path d="M3 24c6-10 13-14 21-14s15 4 21 14c-6 10-13 14-21 14S9 34 3 24z"/><circle cx="24" cy="24" r="6"/></g>
+    <g id="i-lips"><path d="M5 24c4-5 8-8 12-7 3-2 11-2 14 0 4-1 8 2 12 7-5 8-12 12-19 12S10 32 5 24z"/><path d="M5 24h38"/></g>
+    <g id="i-face"><circle cx="24" cy="24" r="18"/><circle cx="17" cy="20" r="1.6"/><circle cx="31" cy="20" r="1.6"/><path d="M16 30c5 5 11 5 16 0"/></g>
+    <g id="i-user"><circle cx="24" cy="15" r="8"/><path d="M8 43c0-10 7-16 16-16s16 6 16 16"/></g>
+    <g id="i-users"><circle cx="17" cy="16" r="6"/><path d="M5 40c0-8 5-13 12-13s12 5 12 13"/><circle cx="34" cy="14" r="5"/><path d="M33 26c6 0 10 4 10 11"/></g>
+    <g id="i-heat"><rect x="6" y="6" width="11" height="11" fill="#222" fill-opacity=".8"/><rect x="18.5" y="6" width="11" height="11" fill="#222" fill-opacity=".25"/><rect x="31" y="6" width="11" height="11" fill="#222" fill-opacity=".08"/><rect x="6" y="18.5" width="11" height="11" fill="#222" fill-opacity=".25"/><rect x="18.5" y="18.5" width="11" height="11" fill="#222" fill-opacity=".8"/><rect x="31" y="18.5" width="11" height="11" fill="#222" fill-opacity=".25"/><rect x="6" y="31" width="11" height="11" fill="#222" fill-opacity=".08"/><rect x="18.5" y="31" width="11" height="11" fill="#222" fill-opacity=".25"/><rect x="31" y="31" width="11" height="11" fill="#222" fill-opacity=".8"/></g>
+    <g id="i-snow"><path d="M24 4v40M7 14l34 20M7 34l34-20"/><path d="M19 8l5 5 5-5M19 40l5-5 5 5"/></g>
+    <g id="i-flame"><path d="M24 4c1 9 12 12 12 25a12 12 0 0 1-24 0c0-6 3-10 6-13 0 4 2 6 4 6 0-6-1-12 2-18z"/></g>
+    <g id="i-mag"><circle cx="20" cy="20" r="13"/><path d="M30 30l14 14"/></g>
+    <g id="i-x"><circle cx="24" cy="24" r="18"/><path d="M16 16l16 16M32 16L16 32"/></g>
+    <g id="i-check"><circle cx="24" cy="24" r="18"/><path d="M14 25l7 7 14-15"/></g>
+    <g id="i-warn"><path d="M24 5L45 41H3z"/><path d="M24 18v12"/><circle cx="24" cy="35" r="1.5"/></g>
+    <g id="i-film"><rect x="8" y="5" width="32" height="38" rx="3"/><path d="M8 14h32M8 34h32M15 5v9M33 5v9M15 34v9M33 34v9"/></g>
+    <g id="i-down"><path d="M24 6v24M14 21l10 10 10-10"/><path d="M8 36v6h32v-6"/></g>
+    <g id="i-sync"><path d="M38 17A16 16 0 0 0 9 20"/><path d="M38 8v9h-9"/><path d="M10 31a16 16 0 0 0 29 3"/><path d="M10 40v-9h9"/></g>
+    <g id="i-chip"><rect x="13" y="13" width="22" height="22" rx="3"/><path d="M19 5v8M29 5v8M19 35v8M29 35v8M5 19h8M5 29h8M35 19h8M35 29h8"/></g>
+    <g id="i-sliders"><path d="M6 12h36M6 24h36M6 36h36"/><circle cx="16" cy="12" r="4" fill="#fff"/><circle cx="32" cy="24" r="4" fill="#fff"/><circle cx="20" cy="36" r="4" fill="#fff"/></g>
+    <g id="i-pix"><rect x="8" y="8" width="14" height="14"/><rect x="26" y="8" width="14" height="14" fill="#222" fill-opacity=".25"/><rect x="8" y="26" width="14" height="14" fill="#222" fill-opacity=".25"/><rect x="26" y="26" width="14" height="14"/></g>
+    <g id="i-bolt"><path d="M27 4L10 27h12l-3 17 19-25H26z"/></g>
+    <g id="i-target"><circle cx="24" cy="24" r="18"/><circle cx="24" cy="24" r="10"/><circle cx="24" cy="24" r="2"/></g>
+    <g id="i-db"><ellipse cx="24" cy="11" rx="14" ry="6"/><path d="M10 11v26c0 3 6 6 14 6s14-3 14-6V11M10 24c0 3 6 6 14 6s14-3 14-6"/></g>
+  </defs>
+</svg>
+
+<main>
+
+<section><div class="fit"><div class="stage cover">
+  <div class="art"><svg data-d="cover" viewBox="0 0 1000 110"></svg></div>
+  <h1>Vietnamese Audio-Visual Deepfake Detection Using Cross-Modal Temporal Consistency</h1>
+  <p class="en">Phát hiện deepfake âm thanh và hình ảnh tiếng Việt dựa trên tính nhất quán thời gian liên phương thức</p>
+  <div class="team">
+    <div><b>Group GFA26AI19</b><br>Nguyễn Văn Linh<br>Nguyễn Lâm Anh<br>Nguyễn Minh Nhật</div>
+    <div><b>Supervisors</b><br>Nguyễn Xuân Huy<br>Nguyễn Quốc Trung</div>
+  </div>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">02 · PROBLEM</p>
+  <h2>Two streams, three questions, one AI score</h2>
+  <div class="art"><svg data-d="s3" viewBox="0 0 1760 760"></svg></div>
+  <p class="note"><b>sham</b>: a real clip whose audio is the same person's real audio from another clip, so it is out of sync with no AI involved. Lip-sync: a generator redraws the lips to match a given audio clip. A cloned voice over the original lips also breaks sync. Faces and matrices are illustrative only.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">03 · DATASET</p>
+  <h2>Six cells separate "AI-made" from "out of sync"</h2>
+  <div class="art"><svg data-d="s5" viewBox="0 0 1760 800"></svg></div>
+  <p class="note">Each cell 2–6 has a <b>full</b> version (fake over the whole clip) and a <b>partial</b> one (exactly one 0.3–3 s segment). The "other clip" and the voice sample always come from the same person and the same split.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">04 · REAL-DATA PIPELINE</p>
+  <h2>Real-data pipeline: five steps, one model each</h2>
+  <div class="art"><svg data-d="s6r" viewBox="0 0 1760 700"></svg></div>
+  <p class="note">Model chip color: blue = visual · orange = audio · green = audio-visual sync. The numbers inside each layer are the thresholds in use. Every step runs on CPU and is written to the ledger.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">05 · FAKE-GENERATION PIPELINE</p>
+  <h2>Voice and visuals run separately, then merge</h2>
+  <div class="art"><svg data-d="s6a" viewBox="0 0 1760 670"></svg></div>
+  <p class="note">The small pictures are illustrative only. Dashed: test set only (track C, F5 inpainting, is test only too). Cell 1 is the original clip, cell 2 puts real audio from another clip over the original visuals, cell 3 puts an AI voice over them; none of these three goes through a generator. Voice runs first, visuals second.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">05B · TRIAL DIAGRAM STYLE</p>
+  <h2>Fake generation: the models we chose</h2>
+  <div class="art"><svg data-d="s6ad" viewBox="0 0 1760 730"></svg></div>
+  <p class="note">Trial: the large frames are the model choices; dashed means test set only. Cell 1 is the original clip, cell 2 puts real audio from another clip over the original visuals, cell 3 puts an AI voice over them; none of these three goes through a generator.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">06 · STATISTICS</p>
+  <h2>7,622 files: balanced across cells, generators and voices</h2>
+  <div class="art"><svg data-d="s6b" viewBox="0 0 1760 800"></svg></div>
+  <p class="note">Part 1, after trimming the last 0.4 s of every file. 2.3% short of the planned 7,800: the 33 longest clips have no sham, and 3.1% of lip-sync runs were dropped (the generator found no face). Split by person: 24 / 6 / 10. Dashed: test only.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">07 · BASELINE · BL-V</p>
+  <h2>BL-V · LIPINC-V2: watches the mouth but is near chance</h2>
+  <div class="art"><svg data-d="s7a" viewBox="0 0 1760 760"></svg></div>
+  <p class="note">Architecture follows the original model.py (Keras), reimplemented in PyTorch. Paper numbers come from the arXiv HTML version (2504.01470). Part 1 results use 1 seed and 10 test people.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">08 · BASELINE · BL-A</p>
+  <h2>BL-A · XLS-R + AASIST: fake voices it never learned</h2>
+  <div class="art"><svg data-d="s7b" viewBox="0 0 1760 760"></svg></div>
+  <p class="note">Architecture follows the original SSL_Anti-spoofing, reimplemented in PyTorch. The paper EER is measured on ASVspoof 2021, under conditions unlike our data, so it is not directly comparable.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">09 · BASELINE · BL-M</p>
+  <h2>BL-M and BL-M/sup · AVH-Align: it only measures sync</h2>
+  <div class="art"><svg data-d="s7c" viewBox="0 0 1760 760"></svg></div>
+  <p class="note">Both baselines share Φ and differ in how they learn: real clips only, or with AI? labels. Paper numbers come from v003_model §2.1; the paper numbers for AVH-Align/sup are unchecked.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">10 · BASELINE SUMMARY</p>
+  <h2>Baseline weaknesses and gaps</h2>
+  <div class="art"><svg data-d="s7d" viewBox="0 0 1760 760"></svg></div>
+  <p class="note">All numbers are part 1, 1 seed, 10 test people. "Shown / not shown" follows the pre-registered gates (v003_model §5.5).</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">11 · PROPOSED MODEL · M1</p>
+  <h2>M1 · TriHead-v2: three branches, three heads, one reference</h2>
+  <div class="art"><svg data-d="s8n" viewBox="0 0 1760 760"></svg></div>
+  <p class="note">Parameters are counted from the code (the speaker heads are used only in training: 0.007 M). TCN: residual dilated Conv1d, hidden 128, dropout 0.1. Black numbered circles link the diagram to the boxes on the right.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">12 · PROPOSED MODEL · M2</p>
+  <h2>M2 · AVH-Align+: an upgrade of AVH-Align</h2>
+  <div class="art"><svg data-d="s9n" viewBox="0 0 1760 760"></svg></div>
+  <p class="note">Parameters are counted from the code. TCN: residual dilated Conv1d, hidden 128, dropout 0.1. Black numbered circles link the diagram to the boxes on the right.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">13 · TRAINING</p>
+  <h2>Training: features, recipe, system</h2>
+  <div class="art"><svg data-d="s10t" viewBox="0 0 1760 740"></svg></div>
+  <p class="note">Baseline recipes follow the original code; every difference is listed on each baseline page.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">14 · TRAINING RESULTS</p>
+  <h2>Every model stopped early; val is about 0.04 above test</h2>
+  <div class="art"><svg data-d="s10r" viewBox="0 0 1760 760"></svg></div>
+  <p class="note">One seed (42). Curves are drawn from each run's history.json; hours are model time, with two GPUs running in parallel.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">15 · RESULTS</p>
+  <h2>M1 is best: AUC 0.947</h2>
+  <p class="sub">Task "AI?" · test: 2,336 samples from 10 unseen people · 1 seed</p>
+  <div class="art"><svg data-d="s10" viewBox="0 0 1760 760"></svg></div>
+  <p class="note"><b>AUC</b>: probability that the model ranks a fake clip above a real one; 0.5 is guessing. 95% CI by bootstrap over people.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">16 · ANALYSIS</p>
+  <h2>The sync branch decides; sham is no longer confused</h2>
+  <div class="art"><svg data-d="s11" viewBox="0 0 1760 800"></svg></div>
+  <p class="note">Left: removing each M1 branch (AUC before → after). Right: AUC between sham and real clips on the "AI?" score; 0.5 means no confusion. By the pre-registered rule, the trace branch and the person reference are not yet counted as contributions.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">17 · ANALYSIS</p>
+  <h2>Where M1 is weak: what it has not seen</h2>
+  <div class="art"><svg data-d="s12" viewBox="0 0 1760 800"></svg></div>
+  <p class="note">M1's AUC on the "AI?" task, each group against real clips. "Unseen" generators and voices exist only in the test set.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">APPENDIX</p>
+  <h2>At a 1% false-alarm threshold, M1 catches 79% of fakes</h2>
+  <div class="art"><svg data-d="s14" viewBox="0 0 1760 780"></svg></div>
+  <p class="note">Threshold chosen on real clips of the validation set. On test, different people shift it: M1 set to 1% becomes 2.9%. Per-person calibration is needed before real use.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage cover">
+  <div class="txt">
+    <h1>Thank you · Questions</h1>
+    <p class="lead">Vietnamese Audio-Visual Deepfake Detection Using Cross-Modal Temporal Consistency</p>
+    <p class="who"><b>Group GFA26AI19</b> · Nguyễn Văn Linh · Nguyễn Lâm Anh · Nguyễn Minh Nhật</p>
+  </div>
+</div></div></section>
+
+</main>
+<script src="talk.js"></script>
+</body>
+</html>

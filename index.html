@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VN-AV-DF · Bài thuyết trình</title>
+<link rel="stylesheet" href="talk.css">
+<script>
+  /* đặt hệ số thu phóng trước khi vẽ, để không nháy */
+  (function () {
+    var set = function () {
+      var k = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+      document.documentElement.style.setProperty('--k', k);
+    };
+    set(); window.addEventListener('resize', set);
+  })();
+</script>
+</head>
+<body>
+<a class="lang" href="index.en.html">English</a>
+<button id="tn" class="tn" type="button">Ghi chú: bật (N)</button>
+
+<!-- icon dùng chung: khung 48 × 48, nét đơn -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#444"/></marker>
+    <marker id="ahp" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#8A6DB8"/></marker>
+    <g id="i-video"><rect x="5" y="13" width="26" height="22" rx="4"/><path d="M31 21l12-7v20l-12-7z"/></g>
+    <g id="i-wave"><path d="M7 20v8M14 13v22M21 7v34M28 15v18M35 11v26M42 20v8"/></g>
+    <g id="i-speaker"><path d="M6 19h8l11-9v28l-11-9H6z"/><path d="M32 17c3 4 3 10 0 14M37 12c6 7 6 17 0 24"/></g>
+    <g id="i-eye"><path d="M3 24c6-10 13-14 21-14s15 4 21 14c-6 10-13 14-21 14S9 34 3 24z"/><circle cx="24" cy="24" r="6"/></g>
+    <g id="i-lips"><path d="M5 24c4-5 8-8 12-7 3-2 11-2 14 0 4-1 8 2 12 7-5 8-12 12-19 12S10 32 5 24z"/><path d="M5 24h38"/></g>
+    <g id="i-face"><circle cx="24" cy="24" r="18"/><circle cx="17" cy="20" r="1.6"/><circle cx="31" cy="20" r="1.6"/><path d="M16 30c5 5 11 5 16 0"/></g>
+    <g id="i-user"><circle cx="24" cy="15" r="8"/><path d="M8 43c0-10 7-16 16-16s16 6 16 16"/></g>
+    <g id="i-users"><circle cx="17" cy="16" r="6"/><path d="M5 40c0-8 5-13 12-13s12 5 12 13"/><circle cx="34" cy="14" r="5"/><path d="M33 26c6 0 10 4 10 11"/></g>
+    <g id="i-heat"><rect x="6" y="6" width="11" height="11" fill="#222" fill-opacity=".8"/><rect x="18.5" y="6" width="11" height="11" fill="#222" fill-opacity=".25"/><rect x="31" y="6" width="11" height="11" fill="#222" fill-opacity=".08"/><rect x="6" y="18.5" width="11" height="11" fill="#222" fill-opacity=".25"/><rect x="18.5" y="18.5" width="11" height="11" fill="#222" fill-opacity=".8"/><rect x="31" y="18.5" width="11" height="11" fill="#222" fill-opacity=".25"/><rect x="6" y="31" width="11" height="11" fill="#222" fill-opacity=".08"/><rect x="18.5" y="31" width="11" height="11" fill="#222" fill-opacity=".25"/><rect x="31" y="31" width="11" height="11" fill="#222" fill-opacity=".8"/></g>
+    <g id="i-snow"><path d="M24 4v40M7 14l34 20M7 34l34-20"/><path d="M19 8l5 5 5-5M19 40l5-5 5 5"/></g>
+    <g id="i-flame"><path d="M24 4c1 9 12 12 12 25a12 12 0 0 1-24 0c0-6 3-10 6-13 0 4 2 6 4 6 0-6-1-12 2-18z"/></g>
+    <g id="i-mag"><circle cx="20" cy="20" r="13"/><path d="M30 30l14 14"/></g>
+    <g id="i-x"><circle cx="24" cy="24" r="18"/><path d="M16 16l16 16M32 16L16 32"/></g>
+    <g id="i-check"><circle cx="24" cy="24" r="18"/><path d="M14 25l7 7 14-15"/></g>
+    <g id="i-warn"><path d="M24 5L45 41H3z"/><path d="M24 18v12"/><circle cx="24" cy="35" r="1.5"/></g>
+    <g id="i-film"><rect x="8" y="5" width="32" height="38" rx="3"/><path d="M8 14h32M8 34h32M15 5v9M33 5v9M15 34v9M33 34v9"/></g>
+    <g id="i-down"><path d="M24 6v24M14 21l10 10 10-10"/><path d="M8 36v6h32v-6"/></g>
+    <g id="i-sync"><path d="M38 17A16 16 0 0 0 9 20"/><path d="M38 8v9h-9"/><path d="M10 31a16 16 0 0 0 29 3"/><path d="M10 40v-9h9"/></g>
+    <g id="i-chip"><rect x="13" y="13" width="22" height="22" rx="3"/><path d="M19 5v8M29 5v8M19 35v8M29 35v8M5 19h8M5 29h8M35 19h8M35 29h8"/></g>
+    <g id="i-sliders"><path d="M6 12h36M6 24h36M6 36h36"/><circle cx="16" cy="12" r="4" fill="#fff"/><circle cx="32" cy="24" r="4" fill="#fff"/><circle cx="20" cy="36" r="4" fill="#fff"/></g>
+    <g id="i-pix"><rect x="8" y="8" width="14" height="14"/><rect x="26" y="8" width="14" height="14" fill="#222" fill-opacity=".25"/><rect x="8" y="26" width="14" height="14" fill="#222" fill-opacity=".25"/><rect x="26" y="26" width="14" height="14"/></g>
+    <g id="i-bolt"><path d="M27 4L10 27h12l-3 17 19-25H26z"/></g>
+    <g id="i-target"><circle cx="24" cy="24" r="18"/><circle cx="24" cy="24" r="10"/><circle cx="24" cy="24" r="2"/></g>
+    <g id="i-db"><ellipse cx="24" cy="11" rx="14" ry="6"/><path d="M10 11v26c0 3 6 6 14 6s14-3 14-6V11M10 24c0 3 6 6 14 6s14-3 14-6"/></g>
+  </defs>
+</svg>
+
+<main>
+
+<section><div class="fit"><div class="stage cover">
+  <div class="art"><svg data-d="cover" viewBox="0 0 1000 110"></svg></div>
+  <h1>Phát hiện deepfake âm thanh và hình ảnh tiếng Việt dựa trên tính nhất quán thời gian liên phương thức</h1>
+  <p class="en">Vietnamese Audio-Visual Deepfake Detection Using Cross-Modal Temporal Consistency</p>
+  <div class="team">
+    <div><b>Nhóm GFA26AI19</b><br>Nguyễn Văn Linh<br>Nguyễn Lâm Anh<br>Nguyễn Minh Nhật</div>
+    <div><b>Giảng viên hướng dẫn</b><br>Nguyễn Xuân Huy<br>Nguyễn Quốc Trung</div>
+  </div>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">02 · VẤN ĐỀ</p>
+  <h2>Hai luồng, ba câu hỏi, một điểm AI</h2>
+  <div class="art"><svg data-d="s3" viewBox="0 0 1760 760"></svg></div>
+  <p class="note"><b>sham</b>: clip thật nhưng tiếng là tiếng thật của chính người đó ở clip khác, nên lệch mà không có AI. Lip-sync: generator vẽ lại môi theo một đoạn tiếng. Giọng AI đặt lên môi gốc cũng làm tiếng và môi lệch. Khuôn mặt và ma trận chỉ để minh hoạ.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">03 · BỘ DỮ LIỆU</p>
+  <h2>Sáu ô tách "có AI" khỏi "tiếng lệch"</h2>
+  <div class="art"><svg data-d="s5" viewBox="0 0 1760 800"></svg></div>
+  <p class="note">Mỗi ô 2–6 có bản <b>full</b> (giả cả clip) và <b>partial</b> (giả đúng một đoạn 0,3–3 s). Clip khác và giọng mẫu luôn của cùng người, cùng tập.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">04 · PIPELINE DỮ LIỆU REAL</p>
+  <h2>Pipeline dữ liệu real: năm bước, mỗi bước một mô hình</h2>
+  <div class="art"><svg data-d="s6r" viewBox="0 0 1760 700"></svg></div>
+  <p class="note">Màu viên mô hình: xanh dương = về hình · cam = về tiếng · xanh lá = đo khớp tiếng-hình. Số trong từng lớp là ngưỡng đang dùng. Mọi bước chạy trên CPU và ghi vào sổ cái.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">05 · PIPELINE SINH GIẢ</p>
+  <h2>Giọng và hình chạy riêng, rồi gộp lại</h2>
+  <div class="art"><svg data-d="s6a" viewBox="0 0 1760 670"></svg></div>
+  <p class="note">Hình nhỏ chỉ để minh hoạ. Nét đứt: chỉ có ở tập test (track C, F5 inpainting, cũng chỉ ở test). Ô 1 là clip gốc, ô 2 ghép tiếng thật của clip khác lên hình gốc, ô 3 đặt giọng AI lên hình gốc; ba ô này không qua generator. Giọng chạy trước, hình chạy sau.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">05B · THỬ KIỂU SƠ ĐỒ HÌNH</p>
+  <h2>Sinh giả: những mô hình được chọn</h2>
+  <div class="art"><svg data-d="s6ad" viewBox="0 0 1760 730"></svg></div>
+  <p class="note">Bản thử: khung to là các lựa chọn mô hình; nét đứt là loại chỉ có ở tập test. Ô 1 là clip gốc, ô 2 ghép tiếng thật của clip khác lên hình gốc, ô 3 đặt giọng AI lên hình gốc; ba ô này không qua generator.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">06 · SỐ LIỆU</p>
+  <h2>7.622 file: cân bằng theo ô, generator và giọng</h2>
+  <div class="art"><svg data-d="s6b" viewBox="0 0 1760 800"></svg></div>
+  <p class="note">Part 1, bản đã cắt 0,4 s cuối mỗi file. Thiếu 2,3 % so với kế hoạch 7.800: 33 clip dài nhất không có sham, và 3,1 % lần chạy lip-sync bị bỏ (generator không thấy mặt). Tập chia theo người: 24 / 6 / 10. Nét đứt: chỉ có ở test.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">07 · BASELINE · BL-V</p>
+  <h2>BL-V · LIPINC-V2: nhìn miệng nhưng gần như đoán mò</h2>
+  <div class="art"><svg data-d="s7a" viewBox="0 0 1760 760"></svg></div>
+  <p class="note">Kiến trúc theo model.py gốc (Keras), cài lại bằng PyTorch. Số của paper lấy từ bản HTML trên arXiv (2504.01470). Kết quả part 1 là 1 seed, 10 người test.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">08 · BASELINE · BL-A</p>
+  <h2>BL-A · XLS-R + AASIST: giọng giả mà không học được</h2>
+  <div class="art"><svg data-d="s7b" viewBox="0 0 1760 760"></svg></div>
+  <p class="note">Kiến trúc theo SSL_Anti-spoofing gốc, cài lại bằng PyTorch. EER của paper đo trên ASVspoof 2021, điều kiện khác dữ liệu của mình nên không so trực tiếp.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">09 · BASELINE · BL-M</p>
+  <h2>BL-M và BL-M/sup · AVH-Align: chỉ đo độ khớp</h2>
+  <div class="art"><svg data-d="s7c" viewBox="0 0 1760 760"></svg></div>
+  <p class="note">Hai baseline dùng chung Φ, khác cách học: chỉ clip real, hoặc có nhãn AI?. Số của paper lấy từ v003_model §2.1; số của AVH-Align/sup trong paper chưa kiểm.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">10 · TỔNG KẾT BASELINE</p>
+  <h2>Điểm yếu của baseline và khoảng trống</h2>
+  <div class="art"><svg data-d="s7d" viewBox="0 0 1760 760"></svg></div>
+  <p class="note">Mọi số là part 1, 1 seed, 10 người test. "Đã chứng minh / chưa chứng minh" theo cổng đặt trước (v003_model §5.5).</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">11 · MÔ HÌNH ĐỀ XUẤT · M1</p>
+  <h2>M1 · TriHead-v2: ba nhánh, ba đầu, một tham chiếu</h2>
+  <div class="art"><svg data-d="s8n" viewBox="0 0 1760 760"></svg></div>
+  <p class="note">Số tham số đếm từ code (đầu người nói chỉ dùng khi huấn luyện: 0,007 M). TCN: Conv1d giãn có residual, hidden 128, dropout 0,1. Vòng số đen nối sơ đồ với hộp bên phải.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">12 · MÔ HÌNH ĐỀ XUẤT · M2</p>
+  <h2>M2 · AVH-Align+: nâng cấp từ AVH-Align</h2>
+  <div class="art"><svg data-d="s9n" viewBox="0 0 1760 760"></svg></div>
+  <p class="note">Số tham số đếm từ code. TCN: Conv1d giãn có residual, hidden 128, dropout 0,1. Vòng số đen nối sơ đồ với hộp bên phải.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">13 · HUẤN LUYỆN</p>
+  <h2>Huấn luyện: đặc trưng, công thức, hệ thống</h2>
+  <div class="art"><svg data-d="s10t" viewBox="0 0 1760 740"></svg></div>
+  <p class="note">Công thức baseline giữ đúng code gốc; mọi khác biệt ghi ở trang của từng baseline.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">14 · KẾT QUẢ HUẤN LUYỆN</p>
+  <h2>Mọi model dừng sớm; val cao hơn test khoảng 0,04</h2>
+  <div class="art"><svg data-d="s10r" viewBox="0 0 1760 760"></svg></div>
+  <p class="note">Một seed (42). Đường cong vẽ từ history.json của từng lần chạy; số giờ là thời gian model, hai GPU chạy song song.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">15 · KẾT QUẢ</p>
+  <h2>M1 tốt nhất: AUC 0,947</h2>
+  <p class="sub">Tác vụ "có AI?" · test 2.336 mẫu của 10 người chưa thấy · 1 seed</p>
+  <div class="art"><svg data-d="s10" viewBox="0 0 1760 760"></svg></div>
+  <p class="note"><b>AUC</b>: xác suất model xếp một clip giả cao hơn một clip thật; 0,5 là đoán mò. CI 95 % bootstrap theo người.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">16 · PHÂN TÍCH</p>
+  <h2>Nhánh khớp quyết định; sham không còn bị nhầm</h2>
+  <div class="art"><svg data-d="s11" viewBox="0 0 1760 800"></svg></div>
+  <p class="note">Trái: bỏ từng nhánh của M1 (AUC trước → sau). Phải: AUC giữa clip sham và clip thật trên điểm "có AI?"; 0,5 là không nhầm. Theo quy ước đặt trước, nhánh dấu vết và tham chiếu chưa được nhận là đóng góp.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">17 · PHÂN TÍCH</p>
+  <h2>M1 yếu ở đâu: thứ chưa từng thấy</h2>
+  <div class="art"><svg data-d="s12" viewBox="0 0 1760 800"></svg></div>
+  <p class="note">AUC của M1 trên tác vụ "có AI?", mỗi nhóm so với clip thật. Generator và giọng "chưa thấy" chỉ có ở test.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage">
+  <p class="no">PHỤ LỤC</p>
+  <h2>Ngưỡng 1 % báo nhầm: M1 bắt 79 % clip giả</h2>
+  <div class="art"><svg data-d="s14" viewBox="0 0 1760 780"></svg></div>
+  <p class="note">Ngưỡng chọn trên clip thật của tập validation. Ở test người khác nên ngưỡng trôi: M1 đặt 1 % thành 2,9 %. Cần hiệu chuẩn theo người trước khi dùng thật.</p>
+</div></div></section>
+
+<section><div class="fit"><div class="stage cover">
+  <div class="txt">
+    <h1>Cảm ơn · Hỏi đáp</h1>
+    <p class="lead">Phát hiện deepfake âm thanh và hình ảnh tiếng Việt dựa trên tính nhất quán thời gian liên phương thức</p>
+    <p class="who"><b>Nhóm GFA26AI19</b> · Nguyễn Văn Linh · Nguyễn Lâm Anh · Nguyễn Minh Nhật</p>
+  </div>
+</div></div></section>
+
+</main>
+<script src="talk.js"></script>
+</body>
+</html>
